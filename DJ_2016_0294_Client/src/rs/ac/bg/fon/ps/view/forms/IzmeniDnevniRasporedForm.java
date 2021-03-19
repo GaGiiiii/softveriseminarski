@@ -210,7 +210,7 @@ public class IzmeniDnevniRasporedForm extends javax.swing.JDialog {
             selectedDnevniRaspored.setDatum(date2);
             
             KreirajDnevniRasporedHelp kdrh = new KreirajDnevniRasporedHelp(selectedDnevniRaspored, projekcije);           
-            Response res = ControllerC.getInstance().kreirajDnevniRaspored(kdrh);
+            Response res = ControllerC.getInstance().izmeniDnevniRaspored(kdrh);
 
             if (res.getException() == null) {
                 JOptionPane.showMessageDialog(this, "Sistem je izmenio dnevni raspored", "Uspesno izmenjen dnevni raspored", JOptionPane.INFORMATION_MESSAGE);

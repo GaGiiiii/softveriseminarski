@@ -95,7 +95,7 @@ public class LoginForm extends javax.swing.JFrame {
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         String username = this.username.getText();
         String password = String.valueOf(this.password.getPassword());
-            
+
         Korisnik k = new Korisnik();
         k.setUsername(username);
         k.setPassword(password);
@@ -116,8 +116,8 @@ public class LoginForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, res.getException().getMessage(), "Neuspesna prijava", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Server je ugasen", JOptionPane.ERROR_MESSAGE);
-        }
+            JOptionPane.showMessageDialog(this,"Server je ugasen ili baza nije konektovana.", "Neuspesna prijava", JOptionPane.ERROR_MESSAGE);
+        } 
     }//GEN-LAST:event_loginBtnActionPerformed
 
 

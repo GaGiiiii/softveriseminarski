@@ -9,10 +9,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import rs.ac.bg.fon.ps.communication.CommunicationWithServer;
-import rs.ac.bg.fon.ps.communication.Operation;
-import rs.ac.bg.fon.ps.communication.Request;
 import rs.ac.bg.fon.ps.communication.Response;
+import rs.ac.bg.fon.ps.controllerC.ControllerC;
 import rs.ac.bg.fon.ps.domain.Film;
 
 /**
@@ -225,13 +223,7 @@ public class KreirajFilmForm extends javax.swing.JDialog {
             String opisf = opis.getText();
 
             Film film = new Film(Long.MIN_VALUE, nazivf, zanrf, trajanjef, cenaf, reziserf, glumcif, date2, opisf);
-
-            Request req = new Request();
-            req.setOperation(Operation.KREIRAJ_FILM);
-            req.setParameter(film);
-
-            CommunicationWithServer.getInstance().sendRequest(req);
-            Response res = CommunicationWithServer.getInstance().getResponse();
+            Response res = ControllerC.getInstance().kreirajFilm(film);
 
             if (res.getException() == null) {
                 JOptionPane.showMessageDialog(this, "Sistem je zapamtio film", "Uspesno kreiran film", JOptionPane.INFORMATION_MESSAGE);

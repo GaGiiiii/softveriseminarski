@@ -6,10 +6,8 @@
 package rs.ac.bg.fon.ps.logic.impl;
 
 import java.util.LinkedList;
-import rs.ac.bg.fon.ps.domain.Film;
 import rs.ac.bg.fon.ps.domain.IDomain;
 import rs.ac.bg.fon.ps.domain.Projekcija;
-import rs.ac.bg.fon.ps.domain.Sala;
 import rs.ac.bg.fon.ps.logic.SistemskeOperacije;
 
 /**
@@ -32,7 +30,7 @@ public class PretraziProjekcije extends SistemskeOperacije {
         SistemskeOperacije so = new UcitajListuProjekcija(projekcije);
         so.execute();
         projekcije = so.getList();
-        
+
         LinkedList<IDomain> projekcijeGood = new LinkedList<>();
 
         System.out.println(projekcije);

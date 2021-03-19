@@ -12,18 +12,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import rs.ac.bg.fon.ps.communication.CommunicationWithServer;
-import rs.ac.bg.fon.ps.communication.Operation;
-import rs.ac.bg.fon.ps.communication.Request;
 import rs.ac.bg.fon.ps.communication.Response;
+import rs.ac.bg.fon.ps.controllerC.ControllerC;
 import rs.ac.bg.fon.ps.domain.Dnevni_Raspored;
-import rs.ac.bg.fon.ps.domain.Film;
 import rs.ac.bg.fon.ps.domain.P_DR;
 import rs.ac.bg.fon.ps.domain.Projekcija;
 import rs.ac.bg.fon.ps.helpClasses.KreirajDnevniRasporedHelp;
@@ -212,14 +208,9 @@ public class IzmeniDnevniRasporedForm extends javax.swing.JDialog {
             }
 
             selectedDnevniRaspored.setDatum(date2);
-            KreirajDnevniRasporedHelp kdrh = new KreirajDnevniRasporedHelp(selectedDnevniRaspored, projekcije);
-
-            Request req = new Request();
-            req.setOperation(Operation.IZMENI_DNEVNI_RASPORED);
-            req.setParameter(kdrh);
-
-            CommunicationWithServer.getInstance().sendRequest(req);
-            Response res = CommunicationWithServer.getInstance().getResponse();
+            
+            KreirajDnevniRasporedHelp kdrh = new KreirajDnevniRasporedHelp(selectedDnevniRaspored, projekcije);           
+            Response res = ControllerC.getInstance().kreirajDnevniRaspored(kdrh);
 
             if (res.getException() == null) {
                 JOptionPane.showMessageDialog(this, "Sistem je izmenio dnevni raspored", "Uspesno izmenjen dnevni raspored", JOptionPane.INFORMATION_MESSAGE);
@@ -289,19 +280,12 @@ public class IzmeniDnevniRasporedForm extends javax.swing.JDialog {
         projekcijeTable.getSelectionModel().clearSelection();
 
         try {
-            Request req = new Request();
-            req.setOperation(Operation.UCITAJ_LISTU_P_DR);
+            LinkedList<P_DR> pdrs = new LinkedList<>();
+            pdrs = ControllerC.getInstance().ucitajListuPDR(pdrs);
 
-            CommunicationWithServer.getInstance().sendRequest(req);
-            Response res = CommunicationWithServer.getInstance().getResponse();
-            LinkedList<P_DR> pdrs = (LinkedList<P_DR>) res.getResponse();
 
-            req = new Request();
-            req.setOperation(Operation.UCITAJ_LISTU_PROJEKCIJA);
-
-            CommunicationWithServer.getInstance().sendRequest(req);
-            res = CommunicationWithServer.getInstance().getResponse();
-            LinkedList<Projekcija> projekcije = (LinkedList<Projekcija>) res.getResponse();
+            LinkedList<Projekcija> projekcije = new LinkedList<>();
+            projekcije = ControllerC.getInstance().ucitajListuProjekcija(projekcije);
 
             projekcijeTableModel = new ProjekcijaTableModel(projekcije);
             projekcijeTable.setModel(projekcijeTableModel);
@@ -325,12 +309,8 @@ public class IzmeniDnevniRasporedForm extends javax.swing.JDialog {
 
     private void populateDnevniRasporediTable() {
         try {
-            Request req = new Request();
-            req.setOperation(Operation.UCITAJ_LISTU_DNEVNIH_RASPOREDA);
-
-            CommunicationWithServer.getInstance().sendRequest(req);
-            Response res = CommunicationWithServer.getInstance().getResponse();
-            LinkedList<Dnevni_Raspored> dnevniRasporedi = (LinkedList<Dnevni_Raspored>) res.getResponse();
+            LinkedList<Dnevni_Raspored> dnevniRasporedi = new LinkedList<>();
+            dnevniRasporedi = ControllerC.getInstance().ucitajListuDnevnihRasporeda(dnevniRasporedi);
 
             dnevniRasporedTableModel = new DnevniRasporedTableModel(dnevniRasporedi);
             dnevniRasporedTable.setModel(dnevniRasporedTableModel);

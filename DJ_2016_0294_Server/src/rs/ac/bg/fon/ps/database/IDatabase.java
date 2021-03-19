@@ -13,22 +13,6 @@ import java.util.List;
  */
 public interface IDatabase<T, K> {
 
-//    public default void connect() throws Exception {
-//        Database.getInstance().getConnection();
-//    }
-//
-//    public default void disconnect() throws Exception {
-//        Database.getInstance().getConnection().close();
-//    }
-//
-//    default public void commit() throws Exception {
-//        Database.getInstance().getConnection().commit();
-//    }
-//
-//    default public void rollback() throws Exception {
-//        Database.getInstance().getConnection().rollback();
-//    }
-
     public void insert(T t) throws Exception;
 
     public void update(T t) throws Exception;

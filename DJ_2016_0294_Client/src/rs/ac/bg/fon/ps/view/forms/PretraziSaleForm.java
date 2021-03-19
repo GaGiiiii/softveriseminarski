@@ -12,13 +12,10 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import rs.ac.bg.fon.ps.communication.CommunicationWithServer;
-import rs.ac.bg.fon.ps.communication.Operation;
-import rs.ac.bg.fon.ps.communication.Request;
 import rs.ac.bg.fon.ps.communication.Response;
+import rs.ac.bg.fon.ps.controllerC.ControllerC;
 import rs.ac.bg.fon.ps.domain.IDomain;
 import rs.ac.bg.fon.ps.domain.Sala;
-import rs.ac.bg.fon.ps.helpClasses.PretragaHelp;
 import rs.ac.bg.fon.ps.view.tableModels.SalaTableModel;
 
 /**
@@ -229,13 +226,7 @@ public class PretraziSaleForm extends javax.swing.JDialog {
 
             String nazivf = naziv.getText();
             LinkedList<IDomain> sale = new LinkedList<>();
-
-            Request req = new Request();
-            req.setOperation(Operation.PRETRAZI_SALE);
-            req.setParameter(new PretragaHelp(nazivf, sale));
-
-            CommunicationWithServer.getInstance().sendRequest(req);
-            Response res = CommunicationWithServer.getInstance().getResponse();
+            Response res = ControllerC.getInstance().pretraziSale(nazivf, sale);
 
             if (res.getException() == null) {
                 tableModel = new SalaTableModel((List<Sala>) res.getResponse());
@@ -280,12 +271,8 @@ public class PretraziSaleForm extends javax.swing.JDialog {
         try {
             salaInfoPanel.setVisible(false);
 
-            Request req = new Request();
-            req.setOperation(Operation.UCITAJ_LISTU_SALA);
-
-            CommunicationWithServer.getInstance().sendRequest(req);
-            Response res = CommunicationWithServer.getInstance().getResponse();
-            LinkedList<Sala> sale = (LinkedList<Sala>) res.getResponse();
+            LinkedList<Sala> sale = new LinkedList<>();
+            sale = ControllerC.getInstance().ucitajListuSala(sale);
 
             tableModel = new SalaTableModel(sale);
             saleTable.setModel(tableModel);

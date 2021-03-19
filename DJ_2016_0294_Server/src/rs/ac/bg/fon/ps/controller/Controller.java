@@ -6,11 +6,8 @@
 package rs.ac.bg.fon.ps.controller;
 
 import java.util.LinkedList;
-import java.util.List;
-import rs.ac.bg.fon.ps.database.IDatabase;
 import rs.ac.bg.fon.ps.domain.Film;
 import rs.ac.bg.fon.ps.domain.IDomain;
-import rs.ac.bg.fon.ps.domain.Korisnik;
 import rs.ac.bg.fon.ps.domain.Projekcija;
 import rs.ac.bg.fon.ps.domain.Sala;
 import rs.ac.bg.fon.ps.helpClasses.KreirajDnevniRasporedHelp;

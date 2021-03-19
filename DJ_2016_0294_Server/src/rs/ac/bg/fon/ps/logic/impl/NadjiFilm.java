@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import rs.ac.bg.fon.ps.domain.Film;
 import rs.ac.bg.fon.ps.domain.IDomain;
 import rs.ac.bg.fon.ps.logic.SistemskeOperacije;
-import rs.ac.bg.fon.ps.validation.impl.FilmValidation;
 
 /**
  *
@@ -29,7 +28,7 @@ public class NadjiFilm extends SistemskeOperacije {
             Film filmic = (Film) film;
             if (domainObject.getId().equals(filmic.getId())) {
                 domainObject = filmic;
-                
+
                 return;
             }
         }

@@ -39,6 +39,7 @@ public abstract class SistemskeOperacije {
             validator.validate(domainObject);
         }
     }
+
     protected void connectStorage() throws Exception {
         getDatabase().connect();
     }

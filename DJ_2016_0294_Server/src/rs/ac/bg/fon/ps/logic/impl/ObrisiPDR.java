@@ -5,11 +5,7 @@
  */
 package rs.ac.bg.fon.ps.logic.impl;
 
-import java.util.LinkedList;
-import rs.ac.bg.fon.ps.domain.Film;
-import rs.ac.bg.fon.ps.domain.IDomain;
 import rs.ac.bg.fon.ps.domain.P_DR;
-import rs.ac.bg.fon.ps.domain.Projekcija;
 import rs.ac.bg.fon.ps.logic.SistemskeOperacije;
 
 /**

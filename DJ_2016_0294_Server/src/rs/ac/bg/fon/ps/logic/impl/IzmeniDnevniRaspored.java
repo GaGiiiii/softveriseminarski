@@ -12,7 +12,6 @@ import rs.ac.bg.fon.ps.domain.P_DR;
 import rs.ac.bg.fon.ps.domain.Projekcija;
 import rs.ac.bg.fon.ps.helpClasses.KreirajDnevniRasporedHelp;
 import rs.ac.bg.fon.ps.logic.SistemskeOperacije;
-import rs.ac.bg.fon.ps.validation.impl.ProjekcijaValidation;
 
 /**
  *
@@ -45,19 +44,18 @@ public class IzmeniDnevniRaspored extends SistemskeOperacije {
             }
         }
 
-        System.out.println("A");
         domainObject = database.update(domainObject);
-        System.out.println("B");
 
         LinkedList<IDomain> pdrsDB = null;
         SistemskeOperacije so2 = new UcitajListuPDR(pdrsDB);
         so2.execute();
         pdrsDB = so2.getList();
-        
-        for(IDomain pdr : pdrsDB){
+
+        for (IDomain pdr : pdrsDB) {
             P_DR pdr2 = (P_DR) pdr;
-            if(pdr2.getDnevniRaspored().getId().equals(domainObject.getId()))
-            database.remove(pdr);
+            if (pdr2.getDnevniRaspored().getId().equals(domainObject.getId())) {
+                database.remove(pdr);
+            }
         }
 
         for (Projekcija projekcija : projekcije) {

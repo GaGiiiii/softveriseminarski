@@ -26,8 +26,6 @@ public class KreirajFilm extends SistemskeOperacije {
 
     @Override
     protected void operation() throws Exception {
-        System.out.println("C");
-
         LinkedList<IDomain> filmovi = null;
         SistemskeOperacije so = new UcitajListuFilmova(filmovi);
         so.execute();

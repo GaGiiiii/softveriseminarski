@@ -6,10 +6,8 @@
 package rs.ac.bg.fon.ps.logic.impl;
 
 import java.util.LinkedList;
-import rs.ac.bg.fon.ps.domain.Film;
 import rs.ac.bg.fon.ps.domain.IDomain;
 import rs.ac.bg.fon.ps.domain.Projekcija;
-import rs.ac.bg.fon.ps.domain.Sala;
 import rs.ac.bg.fon.ps.logic.SistemskeOperacije;
 
 /**
@@ -32,13 +30,6 @@ public class NadjiProjekciju extends SistemskeOperacije {
 
         for (IDomain projekcija : projekcije) {
             Projekcija projekcijica = (Projekcija) projekcija;
-            System.out.println("AAA");
-
-            System.out.println(domainObject);
-            System.out.println("A");
-            System.out.println(projekcijica);
-            System.out.println(domainObject.getId());
-            System.out.println("AA");
 
             if (domainObject.getId().equals(projekcijica.getId())) {
                 domainObject = projekcijica;

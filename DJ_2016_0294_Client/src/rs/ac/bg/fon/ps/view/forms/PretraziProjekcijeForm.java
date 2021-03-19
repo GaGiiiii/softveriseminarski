@@ -17,16 +17,12 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import rs.ac.bg.fon.ps.communication.CommunicationWithServer;
-import rs.ac.bg.fon.ps.communication.Operation;
-import rs.ac.bg.fon.ps.communication.Request;
 import rs.ac.bg.fon.ps.communication.Response;
+import rs.ac.bg.fon.ps.controllerC.ControllerC;
 import rs.ac.bg.fon.ps.domain.Film;
 import rs.ac.bg.fon.ps.domain.IDomain;
 import rs.ac.bg.fon.ps.domain.Projekcija;
 import rs.ac.bg.fon.ps.domain.Sala;
-import rs.ac.bg.fon.ps.helpClasses.PretragaHelp;
-import rs.ac.bg.fon.ps.view.tableModels.FilmTableModel;
 import rs.ac.bg.fon.ps.view.tableModels.ProjekcijaTableModel;
 
 /**
@@ -226,12 +222,7 @@ public class PretraziProjekcijeForm extends javax.swing.JDialog {
             String nazivf = naziv.getText();
             LinkedList<IDomain> projekcije = new LinkedList<>();
 
-            Request req = new Request();
-            req.setOperation(Operation.PRETRAZI_PROJEKCIJE);
-            req.setParameter(new PretragaHelp(nazivf, projekcije));
-
-            CommunicationWithServer.getInstance().sendRequest(req);
-            Response res = CommunicationWithServer.getInstance().getResponse();
+            Response res = ControllerC.getInstance().pretraziProjekcije(nazivf, projekcije);
 
             if (res.getException() == null) {
                 tableModel = new ProjekcijaTableModel((List<Projekcija>) res.getResponse());
@@ -269,20 +260,14 @@ public class PretraziProjekcijeForm extends javax.swing.JDialog {
             selectedProjekcija.setFilm(film);
             selectedProjekcija.setSala(sala);
 
-            Request req = new Request();
-            req.setOperation(Operation.IZMENI_PROJEKCIJU);
-            req.setParameter(selectedProjekcija);
-
-            CommunicationWithServer.getInstance().sendRequest(req);
-            Response res = CommunicationWithServer.getInstance().getResponse();
+            Response res = ControllerC.getInstance().izmeniProjekciju(selectedProjekcija);
 
             if (res.getException() == null) {
                 JOptionPane.showMessageDialog(this, "Sistem je zapamtio projekciju", "Uspesno izmenjena projekcija", JOptionPane.INFORMATION_MESSAGE);
-                req.setOperation(Operation.UCITAJ_LISTU_PROJEKCIJA);
 
-                CommunicationWithServer.getInstance().sendRequest(req);
-                res = CommunicationWithServer.getInstance().getResponse();
-                LinkedList<Projekcija> projekcije = (LinkedList<Projekcija>) res.getResponse();
+                LinkedList<Projekcija> projekcije = new LinkedList<>();
+                projekcije = ControllerC.getInstance().ucitajListuProjekcija(projekcije);
+
                 tableModel = new ProjekcijaTableModel((List<Projekcija>) res.getResponse());
                 projekcijeTable.setModel(tableModel);
             } else {
@@ -320,12 +305,8 @@ public class PretraziProjekcijeForm extends javax.swing.JDialog {
 
             projekcijaInfoPanel.setVisible(false);
 
-            Request req = new Request();
-            req.setOperation(Operation.UCITAJ_LISTU_PROJEKCIJA);
-
-            CommunicationWithServer.getInstance().sendRequest(req);
-            Response res = CommunicationWithServer.getInstance().getResponse();
-            LinkedList<Projekcija> projekcije = (LinkedList<Projekcija>) res.getResponse();
+            LinkedList<Projekcija> projekcije = new LinkedList<>();
+            projekcije = ControllerC.getInstance().ucitajListuProjekcija(projekcije);
 
             tableModel = new ProjekcijaTableModel(projekcije);
             projekcijeTable.setModel(tableModel);
@@ -376,21 +357,11 @@ public class PretraziProjekcijeForm extends javax.swing.JDialog {
     }
 
     private void populateFilmoviList() throws Exception {
-        Request req = new Request();
-        req.setOperation(Operation.UCITAJ_LISTU_FILMOVA);
-
-        CommunicationWithServer.getInstance().sendRequest(req);
-        Response res = CommunicationWithServer.getInstance().getResponse();
-        filmovi = (LinkedList<Film>) res.getResponse();
+        filmovi = ControllerC.getInstance().ucitajListuFilmova(filmovi);
     }
 
     private void populateSaleList() throws Exception {
-        Request req = new Request();
-        req.setOperation(Operation.UCITAJ_LISTU_SALA);
-
-        CommunicationWithServer.getInstance().sendRequest(req);
-        Response res = CommunicationWithServer.getInstance().getResponse();
-        sale = (LinkedList<Sala>) res.getResponse();
+        sale = ControllerC.getInstance().ucitajListuSala(sale);
     }
 
 }

@@ -12,10 +12,8 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import rs.ac.bg.fon.ps.communication.CommunicationWithServer;
-import rs.ac.bg.fon.ps.communication.Operation;
-import rs.ac.bg.fon.ps.communication.Request;
 import rs.ac.bg.fon.ps.communication.Response;
+import rs.ac.bg.fon.ps.controllerC.ControllerC;
 import rs.ac.bg.fon.ps.domain.Film;
 import rs.ac.bg.fon.ps.domain.Projekcija;
 import rs.ac.bg.fon.ps.domain.Sala;
@@ -146,13 +144,7 @@ public class KreirajProjekcijuForm extends javax.swing.JDialog {
             Sala sala = (Sala) saleCb.getSelectedItem();
 
             Projekcija projekcija = new Projekcija(Long.MIN_VALUE, date, film, sala);
-
-            Request req = new Request();
-            req.setOperation(Operation.KREIRAJ_PROJEKCIJU);
-            req.setParameter(projekcija);
-
-            CommunicationWithServer.getInstance().sendRequest(req);
-            Response res = CommunicationWithServer.getInstance().getResponse();
+            Response res = ControllerC.getInstance().kreirajProjekciju(projekcija);
 
             if (res.getException() == null) {
                 JOptionPane.showMessageDialog(this, "Sistem je zapamtio projekciju", "Uspesno kreirana projekcija", JOptionPane.INFORMATION_MESSAGE);
@@ -185,23 +177,17 @@ public class KreirajProjekcijuForm extends javax.swing.JDialog {
 
     private void init() {
         try {
-            Request req = new Request();
-            req.setOperation(Operation.UCITAJ_LISTU_FILMOVA);
-
-            CommunicationWithServer.getInstance().sendRequest(req);
-            Response res = CommunicationWithServer.getInstance().getResponse();
-            LinkedList<Film> filmovi = (LinkedList<Film>) res.getResponse();
+            LinkedList<Film> filmovi = new LinkedList<>();
+            filmovi = ControllerC.getInstance().ucitajListuFilmova(filmovi);
 
             filmoviCb.removeAllItems();
             for (Film film : filmovi) {
                 filmoviCb.addItem(film);
             }
 
-            req.setOperation(Operation.UCITAJ_LISTU_SALA);
 
-            CommunicationWithServer.getInstance().sendRequest(req);
-            res = CommunicationWithServer.getInstance().getResponse();
-            LinkedList<Sala> sale = (LinkedList<Sala>) res.getResponse();
+            LinkedList<Sala> sale = new LinkedList<>();
+            sale = ControllerC.getInstance().ucitajListuSala(sale);
 
             saleCb.removeAllItems();
             for (Sala sala : sale) {

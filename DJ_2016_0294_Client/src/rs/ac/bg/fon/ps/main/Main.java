@@ -6,9 +6,6 @@
 package rs.ac.bg.fon.ps.main;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import javax.swing.JOptionPane;
 import rs.ac.bg.fon.ps.view.forms.LoginForm;
 
 /**

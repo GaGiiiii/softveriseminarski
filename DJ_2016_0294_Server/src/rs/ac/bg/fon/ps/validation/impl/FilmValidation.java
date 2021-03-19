@@ -5,7 +5,6 @@
  */
 package rs.ac.bg.fon.ps.validation.impl;
 
-import java.util.Date;
 import rs.ac.bg.fon.ps.domain.Film;
 import rs.ac.bg.fon.ps.domain.IDomain;
 import rs.ac.bg.fon.ps.validation.Validator;
@@ -46,11 +45,10 @@ public class FilmValidation implements Validator {
 //                throw new Exception("Molimo unesite opis filma.");
                 errors += "\n- Molimo unesite opis filma";
             }
-            
+
 //            if(film.getDatum_izlaska().before(new Date())){
 //                errors += "\n- Datum ne moze biti iz proslosti";
 //            }
-
             if (!errors.isEmpty()) {
                 throw new Exception(errors);
             }

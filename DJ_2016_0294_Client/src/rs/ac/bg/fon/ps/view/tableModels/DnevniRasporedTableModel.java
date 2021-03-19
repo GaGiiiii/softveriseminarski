@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import rs.ac.bg.fon.ps.domain.Dnevni_Raspored;
-import rs.ac.bg.fon.ps.domain.Film;
 
 /**
  *

@@ -6,7 +6,6 @@
 package rs.ac.bg.fon.ps.logic.impl;
 
 import java.util.LinkedList;
-import rs.ac.bg.fon.ps.domain.Film;
 import rs.ac.bg.fon.ps.domain.IDomain;
 import rs.ac.bg.fon.ps.domain.Sala;
 import rs.ac.bg.fon.ps.logic.SistemskeOperacije;

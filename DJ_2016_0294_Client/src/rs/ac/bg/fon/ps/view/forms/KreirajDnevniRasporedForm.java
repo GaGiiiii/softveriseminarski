@@ -12,12 +12,9 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import rs.ac.bg.fon.ps.communication.CommunicationWithServer;
-import rs.ac.bg.fon.ps.communication.Operation;
-import rs.ac.bg.fon.ps.communication.Request;
 import rs.ac.bg.fon.ps.communication.Response;
+import rs.ac.bg.fon.ps.controllerC.ControllerC;
 import rs.ac.bg.fon.ps.domain.Dnevni_Raspored;
-import rs.ac.bg.fon.ps.domain.Film;
 import rs.ac.bg.fon.ps.domain.Projekcija;
 import rs.ac.bg.fon.ps.helpClasses.KreirajDnevniRasporedHelp;
 import rs.ac.bg.fon.ps.view.tableModels.ProjekcijaTableModel;
@@ -156,13 +153,7 @@ public class KreirajDnevniRasporedForm extends javax.swing.JDialog {
 
             Dnevni_Raspored dr = new Dnevni_Raspored(Long.MIN_VALUE, date2);
             KreirajDnevniRasporedHelp kdrh = new KreirajDnevniRasporedHelp(dr, projekcije);
-
-            Request req = new Request();
-            req.setOperation(Operation.KREIRAJ_DNEVNI_RASPORED_SA_PROJEKCIJAMA);
-            req.setParameter(kdrh);
-
-            CommunicationWithServer.getInstance().sendRequest(req);
-            Response res = CommunicationWithServer.getInstance().getResponse();
+            Response res = ControllerC.getInstance().kreirajDnevniRaspored(kdrh);
 
             if (res.getException() == null) {
                 JOptionPane.showMessageDialog(this, "Sistem je zapamtio dnevni raspored", "Uspesno kreiran dnevni raspored", JOptionPane.INFORMATION_MESSAGE);
@@ -193,15 +184,9 @@ public class KreirajDnevniRasporedForm extends javax.swing.JDialog {
     }
 
     private void init() {
-//        projekcijeTable.setRowSelectionAllowed(true);
-
         try {
-            Request req = new Request();
-            req.setOperation(Operation.UCITAJ_LISTU_PROJEKCIJA);
-
-            CommunicationWithServer.getInstance().sendRequest(req);
-            Response res = CommunicationWithServer.getInstance().getResponse();
-            LinkedList<Projekcija> projekcije = (LinkedList<Projekcija>) res.getResponse();
+            LinkedList<Projekcija> projekcije = new LinkedList<>();
+            projekcije = ControllerC.getInstance().ucitajListuProjekcija(projekcije);
 
             projekcijeTableModel = new ProjekcijaTableModel(projekcije);
             projekcijeTable.setModel(projekcijeTableModel);

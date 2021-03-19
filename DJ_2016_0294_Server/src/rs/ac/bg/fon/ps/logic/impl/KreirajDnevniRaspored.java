@@ -12,7 +12,6 @@ import rs.ac.bg.fon.ps.domain.P_DR;
 import rs.ac.bg.fon.ps.domain.Projekcija;
 import rs.ac.bg.fon.ps.helpClasses.KreirajDnevniRasporedHelp;
 import rs.ac.bg.fon.ps.logic.SistemskeOperacije;
-import rs.ac.bg.fon.ps.validation.impl.ProjekcijaValidation;
 
 /**
  *

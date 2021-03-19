@@ -6,10 +6,8 @@
 package rs.ac.bg.fon.ps.view.forms;
 
 import javax.swing.JOptionPane;
-import rs.ac.bg.fon.ps.communication.CommunicationWithServer;
-import rs.ac.bg.fon.ps.communication.Operation;
-import rs.ac.bg.fon.ps.communication.Request;
 import rs.ac.bg.fon.ps.communication.Response;
+import rs.ac.bg.fon.ps.controllerC.ControllerC;
 import rs.ac.bg.fon.ps.domain.Sala;
 
 /**
@@ -168,13 +166,7 @@ public class KreirajSaluForm extends javax.swing.JDialog {
             }
 
             Sala sala = new Sala(Long.MAX_VALUE, nazivf, brojMesta, vipMesta, klima, has3D);
-
-            Request req = new Request();
-            req.setOperation(Operation.KREIRAJ_SALU);
-            req.setParameter(sala);
-
-            CommunicationWithServer.getInstance().sendRequest(req);
-            Response res = CommunicationWithServer.getInstance().getResponse();
+            Response res = ControllerC.getInstance().kreirajSalu(sala);
 
             if (res.getException() == null) {
                 JOptionPane.showMessageDialog(this, "Sistem je zapamtio salu", "Uspesno kreirana sala", JOptionPane.INFORMATION_MESSAGE);

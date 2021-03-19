@@ -12,13 +12,10 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import rs.ac.bg.fon.ps.communication.CommunicationWithServer;
-import rs.ac.bg.fon.ps.communication.Operation;
-import rs.ac.bg.fon.ps.communication.Request;
 import rs.ac.bg.fon.ps.communication.Response;
+import rs.ac.bg.fon.ps.controllerC.ControllerC;
 import rs.ac.bg.fon.ps.domain.Film;
 import rs.ac.bg.fon.ps.domain.IDomain;
-import rs.ac.bg.fon.ps.helpClasses.PretragaHelp;
 import rs.ac.bg.fon.ps.view.tableModels.FilmTableModel;
 
 /**
@@ -282,13 +279,7 @@ public class PretraziFilmoveForm extends javax.swing.JDialog {
 
             String nazivf = naziv.getText();
             LinkedList<IDomain> filmovi = new LinkedList<>();
-
-            Request req = new Request();
-            req.setOperation(Operation.PRETRAZI_FILMOVE);
-            req.setParameter(new PretragaHelp(nazivf, filmovi));
-
-            CommunicationWithServer.getInstance().sendRequest(req);
-            Response res = CommunicationWithServer.getInstance().getResponse();
+            Response res = ControllerC.getInstance().pretraziFilmove(nazivf, filmovi);
 
             if (res.getException() == null) {
                 tableModel = new FilmTableModel((List<Film>) res.getResponse());
@@ -311,20 +302,14 @@ public class PretraziFilmoveForm extends javax.swing.JDialog {
         int reply = JOptionPane.showConfirmDialog(null, "Da li ste sigurni da zelite da obrisete film \n\"" + selectedFilm.getNaziv() + "\"?", "UPOZORENJE!", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
             try {
-                Request req = new Request();
-                req.setOperation(Operation.OBRISI_FILM);
-                req.setParameter(selectedFilm);
-
-                CommunicationWithServer.getInstance().sendRequest(req);
-                Response res = CommunicationWithServer.getInstance().getResponse();
+                Response res = ControllerC.getInstance().obrisiFilm(selectedFilm);
 
                 if (res.getException() == null) {
                     JOptionPane.showMessageDialog(this, "Sistem je obrisao film", "Uspesno obrisan film", JOptionPane.INFORMATION_MESSAGE);
-                    req.setOperation(Operation.UCITAJ_LISTU_FILMOVA);
 
-                    CommunicationWithServer.getInstance().sendRequest(req);
-                    res = CommunicationWithServer.getInstance().getResponse();
-                    LinkedList<Film> filmovi = (LinkedList<Film>) res.getResponse();
+                    LinkedList<Film> filmovi = new LinkedList<>();
+                    filmovi = ControllerC.getInstance().ucitajListuFilmova(filmovi);
+                    
                     tableModel = new FilmTableModel((List<Film>) res.getResponse());
                     filmoviTable.setModel(tableModel);
                     selectedFilm = null;
@@ -373,12 +358,8 @@ public class PretraziFilmoveForm extends javax.swing.JDialog {
         try {
             movieInfoPanel.setVisible(false);
 
-            Request req = new Request();
-            req.setOperation(Operation.UCITAJ_LISTU_FILMOVA);
-
-            CommunicationWithServer.getInstance().sendRequest(req);
-            Response res = CommunicationWithServer.getInstance().getResponse();
-            LinkedList<Film> filmovi = (LinkedList<Film>) res.getResponse();
+            LinkedList<Film> filmovi = new LinkedList<>();
+            filmovi = ControllerC.getInstance().ucitajListuFilmova(filmovi);
 
             tableModel = new FilmTableModel(filmovi);
             filmoviTable.setModel(tableModel);

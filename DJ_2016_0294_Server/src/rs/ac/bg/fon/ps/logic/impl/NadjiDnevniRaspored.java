@@ -7,10 +7,7 @@ package rs.ac.bg.fon.ps.logic.impl;
 
 import java.util.LinkedList;
 import rs.ac.bg.fon.ps.domain.Dnevni_Raspored;
-import rs.ac.bg.fon.ps.domain.Film;
 import rs.ac.bg.fon.ps.domain.IDomain;
-import rs.ac.bg.fon.ps.domain.Projekcija;
-import rs.ac.bg.fon.ps.domain.Sala;
 import rs.ac.bg.fon.ps.logic.SistemskeOperacije;
 
 /**
@@ -30,7 +27,7 @@ public class NadjiDnevniRaspored extends SistemskeOperacije {
         UcitajListuDnevnihRasporeda ulp = new UcitajListuDnevnihRasporeda(dnevniRasporedi);
         ulp.execute();
         dnevniRasporedi = ulp.getList();
-        
+
         for (IDomain dnevniRaspored : dnevniRasporedi) {
             Dnevni_Raspored drr = (Dnevni_Raspored) dnevniRaspored;
             if (domainObject.getId().equals(drr.getId())) {

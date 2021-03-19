@@ -1,0 +1,9 @@
+#
+#Mon Mar 15 23:14:14 CET 2021
+address=localhost
+user=root
+port=3306
+password=
+url=jdbc\:mysql\://localhost\:3306/softverism
+database=softverism
+driver=com.mysql.jdbc.Driver
